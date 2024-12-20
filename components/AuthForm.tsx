@@ -1,5 +1,5 @@
 'use client';
-import React from 'react';
+import React, { useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { Button } from '@/components/ui/button';
@@ -14,6 +14,8 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { useForm } from 'react-hook-form';
+import { signInAction, signUpAction } from '@/lib/firebase/auth';
+import SubmitButton from './SubmitButton';
 
 type FormType = 'sign-in' | 'sign-up';
 
@@ -40,6 +42,8 @@ const authFormSchema = (formType: FormType) => {
 };
 
 const AuthForm = ({ type }: { type: FormType }) => {
+  const [error, setError] = useState<string | null>(null); // For error messages
+  const [isLoading, setIsLoading] = useState(false); // Loading state
   const formSchema = authFormSchema(type);
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -51,14 +55,36 @@ const AuthForm = ({ type }: { type: FormType }) => {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values); // Logs the form values
+ async function onSubmit(values: z.infer<typeof formSchema>) {
+  setIsLoading(true);
+  try {
+    let response;
+    if (type === 'sign-up') {
+      response = await signUpAction({ email: values.email, password: values.password });
+    } else {
+      response = await signInAction({ email: values.email, password: values.password });
+    }
+    if (!response?.success) throw new Error(response?.error);
+    
+    // Only reset the form after a successful submission
+    form.reset();
+  } catch (error: any) {
+    const message = error?.message || 'An unexpected error occurred.';
+    setError(message);
+  } finally {
+    setIsLoading(false);
+  }
   }
 
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
         <h1 className="form-title">{type === 'sign-in' ? 'Sign In' : 'Sign Up'}</h1>
+        {
+          error ? (
+            <p>{error}</p>
+          ) : (<div />)
+        }
 
         {/* Email Field */}
         <FormField
@@ -107,7 +133,7 @@ const AuthForm = ({ type }: { type: FormType }) => {
           />
         )}
 
-        <Button type="submit">{type === 'sign-in' ? 'Sign In' : 'Sign Up'}</Button>
+        <SubmitButton isLoading={isLoading}>{type === 'sign-in' ? 'Sign In' : 'Sign Up'}</SubmitButton> 
       </form>
     </Form>
   );
