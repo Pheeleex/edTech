@@ -1,5 +1,8 @@
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, UserCredential } from "firebase/auth";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, User, UserCredential } from "firebase/auth";
 import { auth } from ".";
+import { setAuthCookie } from "../actions/setAuth";
+
+
 
 // Define the input type for authentication actions
 interface AuthActionParams {
@@ -10,16 +13,20 @@ interface AuthActionParams {
 // Define the return type for authentication actions
 interface AuthActionResult {
   success: boolean;
-  user?: firebase.User; // User is part of Firebase's API
+  user?: User // User is part of Firebase's API
   error?: string;
 }
 
+
+
+
 // Sign-up action with type safety
-export async function signUpAction({ email, password }: AuthActionParams): Promise<AuthActionResult> {
+export async function signUpAction({ email, password }: AuthActionParams, res?: any): Promise<AuthActionResult> {
   console.log("Rendering AuthForm component");
   try {
     const userCredential: UserCredential = await createUserWithEmailAndPassword(auth, email, password);
     const user = userCredential.user;
+    await setAuthCookie(user); // Set the auth cookie after successful sign up
     console.log(user, 'how many times'); // Log user details
     return { success: true, user };
   } catch (error: unknown) {
@@ -34,6 +41,7 @@ export async function signInAction({ email, password }: AuthActionParams): Promi
   try {
     const userCredential: UserCredential = await signInWithEmailAndPassword(auth, email, password);
     const user = userCredential.user;
+    await setAuthCookie(user); // Set the auth cookie after successful sign up
     console.log(user); // Log user details
     return { success: true, user };
   } catch (error: unknown) {

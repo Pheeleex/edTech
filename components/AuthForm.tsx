@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useActionState, useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { Button } from '@/components/ui/button';
@@ -16,6 +16,10 @@ import { Input } from '@/components/ui/input';
 import { useForm } from 'react-hook-form';
 import { signInAction, signUpAction } from '@/lib/firebase/auth';
 import SubmitButton from './SubmitButton';
+import { useRouter } from 'next/navigation';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '@/lib/firebase';
+import { setAuthCookie } from '@/lib/actions/setAuth';
 
 type FormType = 'sign-in' | 'sign-up';
 
@@ -42,9 +46,11 @@ const authFormSchema = (formType: FormType) => {
 };
 
 const AuthForm = ({ type }: { type: FormType }) => {
+
   const [error, setError] = useState<string | null>(null); // For error messages
   const [isLoading, setIsLoading] = useState(false); // Loading state
   const formSchema = authFormSchema(type);
+  const router = useRouter()
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -55,27 +61,31 @@ const AuthForm = ({ type }: { type: FormType }) => {
     },
   });
 
- async function onSubmit(values: z.infer<typeof formSchema>) {
-  setIsLoading(true);
-  try {
-    let response;
-    if (type === 'sign-up') {
-      response = await signUpAction({ email: values.email, password: values.password });
-    } else {
-      response = await signInAction({ email: values.email, password: values.password });
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    setIsLoading(true);
+    setError('');
+  
+    try {
+      const response = type === 'sign-up'
+        ? await createUserWithEmailAndPassword(auth, values.email, values.password)
+        : await signInWithEmailAndPassword(auth, values.email, values.password);
+  
+      const user = response.user;
+  
+      if (user) {
+        await setAuthCookie(user)
+        // Redirect after successful authentication and cookie setting
+        router.push(`/students/${user.uid}`);
+      }
+  
+      form.reset();
+    } catch (error: any) {
+      setError(error.message || 'An unexpected error occurred');
+    } finally {
+      setIsLoading(false);
     }
-    if (!response?.success) throw new Error(response?.error);
-    
-    // Only reset the form after a successful submission
-    form.reset();
-  } catch (error: any) {
-    const message = error?.message || 'An unexpected error occurred.';
-    setError(message);
-  } finally {
-    setIsLoading(false);
-  }
-  }
-
+  };
+  
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
