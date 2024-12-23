@@ -76,11 +76,15 @@ const AuthForm = ({ type }: { type: FormType }) => {
       }
 
       form.reset();
-    } catch (error: any) {
-      setError(error.message || 'An unexpected error occurred');
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        setError(error.message || 'An unexpected error occurred');
+      } else {
+        setError('An unexpected error occurred');
+      }
     } finally {
       setIsLoading(false);
-    }
+    }    
   };
 
   return (
