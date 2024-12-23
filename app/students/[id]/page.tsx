@@ -9,7 +9,7 @@ const page = async () => {
   if (!user) {
     return (
       <div>
-        <Navbar />
+       
         <h1>No user found</h1>
       </div>
     );
@@ -17,9 +17,12 @@ const page = async () => {
 
   return (
     <div>
+       <Navbar />
+      <div className='mt-20' >
       <h1>Welcome, {user.displayName || 'Student'}</h1>
       <p>Email: {user.email}</p>
       <p>UID: {user.uid}</p>
+      </div>
     </div>
   );
 };
