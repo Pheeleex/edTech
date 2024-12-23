@@ -1,7 +1,6 @@
 import Image from 'next/image'
 import React from 'react'
 import Button from './Button'
-import { TiLocationArrow } from "react-icons/ti";
 import Link from 'next/link';
 import { avatarPlaceholderUrl } from '@/constants';
 
@@ -22,7 +21,6 @@ const Navbar = () => {
           <Button 
              id="product-button"
              title="Products"
-             rightIcon={<TiLocationArrow />}
              containerClass="bg-blue-50 md:flex hidden items-center justify-center gap-1"
           />
           </div>
