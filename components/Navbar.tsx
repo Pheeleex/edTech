@@ -13,6 +13,7 @@ const Navbar = () => {
          <header className="absolute top-1/2 w-full -translate-y-1/2">
          <nav className="flex size-full items-center justify-between p-4">
              {/* Logo and Prgrams button */}
+          <Link href='/'>
           <div className="flex items-center gap-7">
           <Image src="/assets/icons/eTech-logo.png" alt="logo"
             width={150}
@@ -24,6 +25,7 @@ const Navbar = () => {
              containerClass="bg-blue-50 md:flex hidden items-center justify-center gap-1"
           />
           </div>
+          </Link>
 
            {/* Navigation Links and Audio Button */}
            <div className="flex h-full items-center">

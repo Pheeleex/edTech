@@ -1,3 +1,4 @@
+import Navbar from '@/components/Navbar';
 import { getUserDetails } from '@/lib/actions/user.actions';
 import React from 'react';
 
@@ -8,6 +9,7 @@ const page = async () => {
   if (!user) {
     return (
       <div>
+        <Navbar />
         <h1>No user found</h1>
       </div>
     );
