@@ -1,12 +1,11 @@
 'use client';
-import React, { useActionState, useState } from 'react';
+import React, { useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { Button } from '@/components/ui/button';
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -14,12 +13,11 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { useForm } from 'react-hook-form';
-import { signInAction, signUpAction } from '@/lib/firebase/auth';
-import SubmitButton from './SubmitButton';
-import { useRouter } from 'next/navigation';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '@/lib/firebase';
 import { setAuthCookie } from '@/lib/actions/setAuth';
+import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 type FormType = 'sign-in' | 'sign-up';
 
@@ -33,12 +31,12 @@ const authFormSchema = (formType: FormType) => {
       .regex(/[^a-zA-Z0-9]/, { message: 'Password must include at least one special character.' }),
   });
 
-  if (formType === "sign-up") {
+  if (formType === 'sign-up') {
     return baseSchema.extend({
       confirmPassword: z.string(),
     }).refine((data) => data.password === data.confirmPassword, {
-      message: "Passwords must match.",
-      path: ["confirmPassword"], // Specify where the error should appear
+      message: 'Passwords must match.',
+      path: ['confirmPassword'], // Specify where the error should appear
     });
   }
 
@@ -46,11 +44,10 @@ const authFormSchema = (formType: FormType) => {
 };
 
 const AuthForm = ({ type }: { type: FormType }) => {
-
   const [error, setError] = useState<string | null>(null); // For error messages
   const [isLoading, setIsLoading] = useState(false); // Loading state
   const formSchema = authFormSchema(type);
-  const router = useRouter()
+  const router = useRouter();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -63,21 +60,21 @@ const AuthForm = ({ type }: { type: FormType }) => {
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     setIsLoading(true);
-    setError('');
-  
+    setError(null);
+
     try {
-      const response = type === 'sign-up'
-        ? await createUserWithEmailAndPassword(auth, values.email, values.password)
-        : await signInWithEmailAndPassword(auth, values.email, values.password);
-  
+      const response =
+        type === 'sign-up'
+          ? await createUserWithEmailAndPassword(auth, values.email, values.password)
+          : await signInWithEmailAndPassword(auth, values.email, values.password);
+
       const user = response.user;
-  
+
       if (user) {
-        await setAuthCookie(user)
-        // Redirect after successful authentication and cookie setting
+        await setAuthCookie(user);
         router.push(`/students/${user.uid}`);
       }
-  
+
       form.reset();
     } catch (error: any) {
       setError(error.message || 'An unexpected error occurred');
@@ -85,16 +82,12 @@ const AuthForm = ({ type }: { type: FormType }) => {
       setIsLoading(false);
     }
   };
-  
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
         <h1 className="form-title">{type === 'sign-in' ? 'Sign In' : 'Sign Up'}</h1>
-        {
-          error ? (
-            <p>{error}</p>
-          ) : (<div />)
-        }
+        {error && <p className="text-red-500">{error}</p>}
 
         {/* Email Field */}
         <FormField
@@ -126,7 +119,7 @@ const AuthForm = ({ type }: { type: FormType }) => {
           )}
         />
 
-        {/* Confirm Password Field for Sign Up */}
+        {/* Confirm Password Field for Sign-Up */}
         {type === 'sign-up' && (
           <FormField
             control={form.control}
@@ -143,8 +136,29 @@ const AuthForm = ({ type }: { type: FormType }) => {
           />
         )}
 
-        <SubmitButton isLoading={isLoading}>{type === 'sign-in' ? 'Sign In' : 'Sign Up'}</SubmitButton> 
+        <Button type="submit" disabled={isLoading}>
+          {isLoading ? 'Loading...' : type === 'sign-in' ? 'Sign In' : 'Sign Up'}
+        </Button>
       </form>
+
+      {/* Conditional Container */}
+      <div className="mt-6 text-center">
+        {type === 'sign-in' ? (
+          <p className="text-gray-700">
+            Don’t have an account?{' '}
+            <Link href="/sign-up" className="text-blue-500 hover:underline">
+             Sign Up
+            </Link>
+          </p>
+        ) : (
+          <p className="text-gray-700">
+            Already have an account?{' '}
+            <Link href="/sign-in" className="text-blue-500 hover:underline">
+            Sign In
+            </Link>
+          </p>
+        )}
+      </div>
     </Form>
   );
 };
