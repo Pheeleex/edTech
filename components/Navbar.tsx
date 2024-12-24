@@ -3,7 +3,6 @@ import Image from 'next/image'
 import React, { useState } from 'react'
 import Button from './Button'
 import Link from 'next/link';
-import { avatarPlaceholderUrl } from '@/constants';
 import { useUser } from '@/lib/context/UserContext';
 import { signOut } from 'firebase/auth';
 import { auth } from '@/lib/firebase';

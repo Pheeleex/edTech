@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Button } from "@/components/ui/button";
@@ -50,7 +50,6 @@ const authFormSchema = (formType: FormType) => {
 const AuthForm = ({ type }: { type: FormType }) => {
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [fullName, setFullName] = useState<string | null>(null);  // Store fullName here
   const router = useRouter();
   const formSchema = authFormSchema(type);
 
@@ -63,21 +62,12 @@ const AuthForm = ({ type }: { type: FormType }) => {
     },
   });
 
-  useEffect(() => {
-    // Check if user is signed in and fetch fullName (displayName) from Firebase
-    const user = auth.currentUser;
-    if (user) {
-      setFullName(user.displayName ?? "");  // Get the fullName from Firebase
-    }
-  }, []);
-
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     setIsLoading(true);
     setError(null);
 
     try {
       let userCredential;
-
       if (type === "sign-up") {
         userCredential = await createUserWithEmailAndPassword(auth, values.email, values.password);
         //@ts-ignore
