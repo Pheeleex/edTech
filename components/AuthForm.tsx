@@ -107,7 +107,7 @@ const AuthForm = ({ type }: { type: FormType }) => {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-        <h1 className="form-title">{type === "sign-in" ? "Sign In" : "Sign Up"}</h1>
+        <h1 className="form-title text-blue-700">{type === "sign-in" ? "Sign In" : "Sign Up"}</h1>
         {error && <p className="text-red-500">{error}</p>}
 
         {/* Full Name Field for Sign-Up */}
@@ -174,7 +174,7 @@ const AuthForm = ({ type }: { type: FormType }) => {
           />
         )}
 
-        <Button type="submit" disabled={isLoading}>
+        <Button type="submit" disabled={isLoading} className="bg-brand  rounded-md">
           {isLoading ? "Loading..." : type === "sign-in" ? "Sign In" : "Sign Up"}
         </Button>
       </form>

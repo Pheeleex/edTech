@@ -9,7 +9,7 @@ const imageContainerStyles =
   "relative w-full flex justify-center items-center overflow-hidden";
 const dotsContainerStyles = "absolute bottom-4 flex justify-center w-full";
 const dotStyle = "mx-1 cursor-pointer w-2 h-2 rounded-full bg-gray-400";
-const activeDotStyle = "bg-red-600";
+const activeDotStyle = "bg-blue-600";
 
 interface CustomSliderProps {
   items: string[]; // Array of image URLs
