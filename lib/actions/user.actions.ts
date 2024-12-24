@@ -24,3 +24,9 @@ export async function getUserDetails() {
     return null; // Return null if no cookies are found
   }
   
+
+  export async function deleteCookies() {
+    const cookieStore = await cookies(); // Get the cookies from the request header
+    cookieStore.delete('auth-token')
+    cookieStore.delete('user_details')
+  }

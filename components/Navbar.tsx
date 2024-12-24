@@ -1,11 +1,34 @@
+'use client'
 import Image from 'next/image'
-import React from 'react'
+import React, { useState } from 'react'
 import Button from './Button'
 import Link from 'next/link';
 import { avatarPlaceholderUrl } from '@/constants';
+import { useUser } from '@/lib/context/UserContext';
+import { signOut } from 'firebase/auth';
+import { auth } from '@/lib/firebase';
+import { deleteCookies } from '@/lib/actions/user.actions';
+import { useRouter } from 'next/navigation';
 
 const Navbar = () => {
+  const [dropdownOpen, setDropdownOpen] = useState(false)
     const navItems = ["Why Edutech", "Contact"];
+    const user = useUser()
+     const router = useRouter();
+    const toggleDropdown = () => {
+      setDropdownOpen(!dropdownOpen);
+    };
+
+    const handleSignOut = async() => {
+      try {
+        await signOut(auth)
+        deleteCookies()
+        router.push('/sign-in')
+        console.log('signed out')
+      } catch (error) {
+        console.error('Error signing out:', error)
+      }
+    }
   return (
     <div
      className="fixed inset-x-0 top-0 z-50 h-16 border-none transition-all duration-700 sm:inset-x-6"
@@ -28,7 +51,7 @@ const Navbar = () => {
           </Link>
 
            {/* Navigation Links and Audio Button */}
-           <div className="flex h-full items-center">
+           <div className="flex h-full items-center relative gap-8">
             <div className="hidden md:block">
               {navItems.map((item, index) => (
                 <Link
@@ -41,12 +64,32 @@ const Navbar = () => {
               ))}
             </div>
             <Image
-          src={avatarPlaceholderUrl}
-          alt="Avatar"
-          width={44}
-          height={44}
-          className="navbar-user-avatar"
-        />
+              src='/assets/images/purple.png'
+              alt="Avatar"
+              width={44}
+              height={44}
+              className="navbar-user-avatar cursor-pointer z-40"
+              onClick={toggleDropdown}
+            />
+
+{dropdownOpen && (
+                <div className="absolute right-1 top-8 mt-2 w-48 bg-white border rounded-lg shadow-lg z-30">
+                  <Link 
+                    href={`/students/${user.user?.uid}`}
+                    className="block px-4 py-2 text-gray-800 hover:bg-gray-100"
+                    onClick={toggleDropdown}
+                    >
+                    Dashboard
+                  </Link>
+                  <button 
+                    //create signout logic
+                    onClick={handleSignOut}
+                    className="block w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-100"
+                  >
+                    Sign out
+                  </button>
+                </div>
+              )}
             </div>
         </nav>
         </header>

@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { Poppins } from 'next/font/google'
+import Navbar from "@/components/Navbar";
+import NavbarWrapper from "@/components/NavbarWrapper";
+import { UserProvider } from "@/lib/context/UserContext";
 
 const poppins = Poppins({
   subsets: ['latin'],
@@ -20,9 +23,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${poppins.variable} font-poppins antialiased`}
+        className={`${poppins.variable} font-poppins antialiased bg-blue-500`}
       >
+        <UserProvider>
+        <NavbarWrapper />
         {children}
+        </UserProvider>
       </body>
     </html>
   );
