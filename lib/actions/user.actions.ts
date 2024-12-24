@@ -10,7 +10,9 @@ export async function getUserDetails() {
     const authToken = cookieStore.get('auth_token');
     const userDetails = cookieStore.get('user_details');
   
-    if (authToken && userDetails) {
+    if (authToken && userDetails && userDetails.value) {
+      console.log('authToken:', authToken);
+  console.log('userDetails:', userDetails);
       try {
         // You can return the cookies or parse them as needed
         const parsedUserDetails = JSON.parse(userDetails.value); // if you saved as JSON
@@ -27,6 +29,7 @@ export async function getUserDetails() {
 
   export async function deleteCookies() {
     const cookieStore = await cookies(); // Get the cookies from the request header
-    cookieStore.delete('auth-token')
+    cookieStore.delete('auth_token')
     cookieStore.delete('user_details')
+    console.log('Cookies deleted successfully');
   }

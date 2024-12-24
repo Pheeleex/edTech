@@ -22,9 +22,9 @@ const Navbar = () => {
     const handleSignOut = async() => {
       try {
         await signOut(auth)
-        deleteCookies()
+        await deleteCookies()
+        console.log('signed out successfully')
         router.push('/sign-in')
-        console.log('signed out')
       } catch (error) {
         console.error('Error signing out:', error)
       }
