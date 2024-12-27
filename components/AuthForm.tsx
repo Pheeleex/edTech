@@ -70,7 +70,7 @@ const AuthForm = ({ type }: { type: FormType }) => {
       let userCredential;
       if (type === "sign-up") {
         userCredential = await createUserWithEmailAndPassword(auth, values.email, values.password);
-        //@ts-ignore
+        //@ts-expect-error
         await updateProfile(userCredential.user, { displayName: values.fullName });
       } else {
         userCredential = await signInWithEmailAndPassword(auth, values.email, values.password);
