@@ -63,7 +63,7 @@ const Navbar = () => {
               ))}
             </div>
             <Image
-              src='/assets/images/purple.png'
+              src='/assets/Images/purple.png'
               alt="Avatar"
               width={44}
               height={44}

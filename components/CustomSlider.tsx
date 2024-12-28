@@ -1,68 +1,61 @@
 'use client';
-
-import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
+import React from 'react';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Autoplay, Navigation, Pagination } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
 
-const containerStyles =
-  "relative flex flex-col items-center bg-white overflow-hidden justify-center py-4";
-const imageContainerStyles =
-  "relative w-full flex justify-center items-center overflow-hidden";
-const dotsContainerStyles = "absolute bottom-4 flex justify-center w-full";
-const dotStyle = "mx-1 cursor-pointer w-2 h-2 rounded-full bg-gray-400";
-const activeDotStyle = "bg-blue-600";
+type CourseItem = {
+  url: string;
+  course: string;
+};
 
 interface CustomSliderProps {
-  items: string[]; // Array of image URLs
-  width: number;
-  height: number;
+  items: CourseItem[];
 }
 
-const CustomSlider: React.FC<CustomSliderProps> = ({ items, width, height }) => {
-  const [currentIndex, setCurrentIndex] = useState<number>(0);
-
-  // Change image every 5 seconds
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentIndex((prevIndex) => (prevIndex + 1) % items.length);
-    }, 5000);
-
-    return () => clearInterval(interval);
-  }, [items.length]);
-
-  const goToSlide = (index: number) => {
-    setCurrentIndex(index);
-  };
-
+const CustomSlider: React.FC<CustomSliderProps> = ({ items }) => {
   return (
-    <div
-      className={`${containerStyles} w-full h-full rounded-lg`}
-      style={{ maxHeight: "400px" }}
+    <Swiper
+      spaceBetween={10}
+      modules={[Autoplay, Pagination]}
+      slidesPerView={1}
+      autoplay={{
+        delay: 3500,
+        disableOnInteraction: false,
+      }}
+      pagination={{
+        clickable: true,
+        renderBullet: function (index, className) {
+          // Customize the bullets here (e.g., adding numbers)
+          return `<span class="${className}">${index + 1}</span>`;
+        },
+      }}
+      className="w-full h-full"
     >
-      <div className={imageContainerStyles} style={{ height: "80%" }}>
-        {items.map((url, index) => (
-          <Image
-            src={items[currentIndex]}
-            alt={`Slide ${index + 1}`}
-            className="slide-img"
-            aria-hidden={currentIndex !== index}
-            key={index}
-            width={width}
-            height={height}
-          />
-        ))}
-      </div>
-      <div className={dotsContainerStyles}>
-        {items.map((_, index) => (
-          <div
-            key={index}
-            onClick={() => goToSlide(index)}
-            className={`${dotStyle} ${index === currentIndex ? activeDotStyle : ""}`}
-            aria-label={`Go to slide ${index + 1}`}
-            aria-current={index === currentIndex ? "true" : "false"}
-          />
-        ))}
-      </div>
-    </div>
+      {items.map((item, index) => (
+        <SwiperSlide key={index} className="w-full h-full relative">
+          {/* Image Container with overflow hidden and styling for positioning */}
+          <div className="w-full h-[300px] relative  rounded-xl shadow-lg 
+          bg-blue-50 flex flex-col py-4 text-center">
+            {/* Course Name Container */}
+           
+              <h1 className='h4 text-[#161652]'>Learn {item.course} </h1> 
+
+            {/* Image Nested inside container, with reduced height */}
+            <Image
+              src={item.url}
+              alt={item.course}
+              width={300}
+              height={250} // Reduced height to allow space for course name
+              className="object-fit w-full h-[80%] mt-4" // Added margin-top for spacing
+            />
+          </div>
+        </SwiperSlide>
+      ))}
+    </Swiper>
   );
 };
 

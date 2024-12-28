@@ -1,13 +1,34 @@
 import React from 'react'
 import Button from './Button'
 import CustomSlider from './CustomSlider'
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+
+type CourseItem = {
+  url: string;
+  course: string;
+};
+
 
 const Hero = () => {
-  const images = [
-                  '/assets/images/frontend-eng.jpg',
-                  '/assets/images/backend-eng.jpg', 
-                  '/assets/images/data-science.jpg',
-                  '/assets/images/ml.jpg'
+  const courses = [
+                    {
+                      url:'/assets/Images/frontend-eng.jpg',
+                      course: 'Frontend Engineering'
+                    },
+                    {
+                      url:  '/assets/Images/backend-eng.jpg', 
+                      course: 'Backend Engineering'
+                    },
+                    {
+                      url: '/assets/Images/data-science.jpg',
+                      course: 'Datascience'
+                    },
+                 {
+                    url:   '/assets/Images/ml.jpg',
+                    course: 'Machine Learning'
+                 }   
                 ]
   return (
     <div className='flex flex-col justify-center items-center gap-8'>
@@ -15,11 +36,9 @@ const Hero = () => {
             <h1 className='h1'>Join the bootcamp that pays off</h1>
             <h3 className='h3 text-center'>Take the fast and reliable path to tech</h3>
         </div>
-        <div className='w-[90%] max-w-[350px] mx-auto h-[300px]'>
-            <CustomSlider
-              items={images}
-              width={300}
-              height={1000}
+        <div className='w-[90%] max-w-[350px] mx-auto'>
+            <CustomSlider 
+            items={courses}
             />
         </div>
         <Button
