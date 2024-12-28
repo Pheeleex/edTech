@@ -213,6 +213,10 @@
   hover:after:origin-bottom-left hover:after:scale-x-100 dark:after:bg-white cursor-pointer;
 }
 
+.floating-nav {
+  @apply bg-black rounded-lg border;
+}
+
 .slide-img{
   transition: translate 300ms ease-in-out;
   flex-grow: 0;

@@ -1,6 +1,7 @@
 'use client'
 import Image from 'next/image'
-import React, { useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
+import gsap from "gsap";
 import Button from './Button'
 import Link from 'next/link';
 import { useUser } from '@/lib/context/UserContext';
@@ -8,15 +9,50 @@ import { signOut } from 'firebase/auth';
 import { auth } from '@/lib/firebase';
 import { deleteCookies } from '@/lib/actions/user.actions';
 import { useRouter } from 'next/navigation';
+import { useWindowScroll } from "react-use";
 
 const Navbar = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false)
+  const navContainerRef = useRef<HTMLDivElement | null>(null);
     const navItems = ["Why Edutech", "Contact"];
+
+    const { y: currentScrollY } = useWindowScroll();
+    const [lastScrollY, setLastScrollY] = useState(0);
+
+    const [isNavVisible, setIsNavVisible] = useState(true);
     const user = useUser()
      const router = useRouter();
     const toggleDropdown = () => {
       setDropdownOpen(!dropdownOpen);
     };
+
+    useEffect(() => {
+      const navElement = navContainerRef.current;
+      if(navContainerRef.current){
+      if (currentScrollY === 0) {
+        // Topmost position: show navbar without floating-nav
+        setIsNavVisible(true);
+        navContainerRef.current.classList.remove("floating-nav");
+      } else if (currentScrollY > lastScrollY) {
+        // Scrolling down: hide navbar and apply floating-nav
+        setIsNavVisible(false);
+        navContainerRef.current.classList.add("floating-nav");
+      } else if (currentScrollY < lastScrollY) {
+        // Scrolling up: show navbar with floating-nav
+        setIsNavVisible(true);
+        navContainerRef.current.classList.add("floating-nav");
+      }
+    }
+      setLastScrollY(currentScrollY);
+    }, [currentScrollY, lastScrollY]);
+  
+    useEffect(() => {
+      gsap.to(navContainerRef.current, {
+        y: isNavVisible ? 0 : -100,
+        opacity: isNavVisible ? 1 : 0,
+        duration: 0.2,
+      });
+    }, [isNavVisible]);
 
     const handleSignOut = async() => {
       try {
@@ -30,7 +66,8 @@ const Navbar = () => {
     }
   return (
     <div
-     className="fixed inset-x-0 top-0 z-50 h-16 border-none transition-all duration-700 sm:inset-x-6"
+      ref={navContainerRef}
+     className="fixed inset-x-0 top-4 z-50 h-16 border-none transition-all duration-700 sm:inset-x-6"
     >
          <header className="absolute top-1/2 w-full -translate-y-1/2">
          <nav className="flex size-full items-center justify-between p-4">

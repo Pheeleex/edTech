@@ -28,10 +28,6 @@ const CustomSlider: React.FC<CustomSliderProps> = ({ items }) => {
       }}
       pagination={{
         clickable: true,
-        renderBullet: function (index, className) {
-          // Customize the bullets here (e.g., adding numbers)
-          return `<span class="${className}">${index + 1}</span>`;
-        },
       }}
       className="w-full h-full"
     >
