@@ -2,7 +2,7 @@
 import Image from 'next/image';
 import React from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Autoplay, Navigation, Pagination } from 'swiper/modules';
+import { Autoplay, Pagination } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
@@ -34,11 +34,11 @@ const CustomSlider: React.FC<CustomSliderProps> = ({ items }) => {
       {items.map((item, index) => (
         <SwiperSlide key={index} className="w-full h-full relative">
           {/* Image Container with overflow hidden and styling for positioning */}
-          <div className="w-full h-[300px] relative  rounded-xl shadow-lg 
-          bg-blue-50 flex flex-col py-4 text-center">
+          <div className="w-full h-[240px] md:h-[300px] relative  rounded-xl shadow-lg 
+          bg-blue-50 flex flex-col py-2 md:py-4 pb-4 text-center">
             {/* Course Name Container */}
            
-              <h1 className='h4 text-[#161652]'>Learn {item.course} </h1> 
+              <h1 className='font-bold text-[#161652]'>Learn {item.course} </h1> 
 
             {/* Image Nested inside container, with reduced height */}
             <Image

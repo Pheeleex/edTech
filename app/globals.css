@@ -70,13 +70,13 @@
 @layer utilities {
   /* ===== TYPOGRAPHY */
   .h1 {
-    @apply text-[50px] leading-[42px] font-bold;
+    @apply text-[35px] md:text-[50px] leading-[32px] md:leading-[42px] font-bold;
   }
   .h2 {
     @apply text-[24px] leading-[36px] font-bold;
   }
   .h3 {
-    @apply text-[20px] leading-[28px] font-semibold;
+    @apply text-[17px] md:text-[20px] leading-[28px] font-medium;
   }
   .h4 {
     @apply text-[18px] leading-[20px] font-medium;

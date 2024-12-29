@@ -27,7 +27,6 @@ const Navbar = () => {
     };
 
     useEffect(() => {
-      const navElement = navContainerRef.current;
       if(navContainerRef.current){
       if (currentScrollY === 0) {
         // Topmost position: show navbar without floating-nav
