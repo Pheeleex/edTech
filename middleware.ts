@@ -4,16 +4,15 @@ import { NextRequest, NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
 
 // Define the paths that do not require authentication (e.g., login, signup)
-const PUBLIC_PATHS = ['/sign-in', '/sign-up', ];
+const PUBLIC_PATHS = ['/', '/sign-in', '/sign-up'];
+
 
 export  async function middleware(req: NextRequest) {
   const cookieStore = await cookies(); // Retrieve cookies from the request
   const authToken = cookieStore.get('auth_token');
   const userDetails = cookieStore.get('user_details');
-
-  // Check if the user is accessing a public path (login, signup)
-  const isPublicPath = PUBLIC_PATHS.some((path) => req.nextUrl.pathname.startsWith(path));
-
+   // Check if the user is accessing a public path
+   const isPublicPath = PUBLIC_PATHS.includes(req.nextUrl.pathname);
   // If the user is not authenticated and trying to access a protected page, redirect to login
   if (!authToken || !userDetails) {
     if (!isPublicPath) {
@@ -26,5 +25,5 @@ export  async function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/', '/students/:path*'],  // Define your protected routes here
+  matcher: ['/students/:path*'],  // Define your protected routes here
 };
