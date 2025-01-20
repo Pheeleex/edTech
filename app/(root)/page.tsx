@@ -1,4 +1,6 @@
+import Alumni from "@/components/Alumni";
 import Certifications from "@/components/Certification";
+import Cta from "@/components/Cta";
 import Hero from "@/components/Hero";
 import HowWeWork from "@/components/HowWeWork";
 import Process from "@/components/Process";
@@ -14,7 +16,8 @@ export default function Home() {
       <Certifications />
       </div>
      <Schools />
-  
+      <Alumni />
+      <Cta />
     </div>
   );
 }
