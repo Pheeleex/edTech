@@ -21,6 +21,7 @@ const Navbar = () => {
 
     const [isNavVisible, setIsNavVisible] = useState(true);
     const user = useUser()
+    console.log(user, 'user', user.user)
      const router = useRouter();
     const toggleDropdown = () => {
       setDropdownOpen(!dropdownOpen);

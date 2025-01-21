@@ -16,7 +16,7 @@ import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
-import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth, db } from "@/lib/firebase";
 import { setAuthCookie } from "@/lib/actions/setAuth";
 import { useRouter } from "next/navigation";
@@ -99,14 +99,21 @@ const AuthForm = ({ type }: { type: FormType }) => {
       } else {
         // Type narrowing to SignInFormValues
         const signInValues = values as SignInFormValues;
-        if(signInValues){
-          console.log(signInValues)
-        }
+    
+        const userCredential = await signInWithEmailAndPassword(
+          auth,
+          signInValues.email,
+          signInValues.password
+        );
+    
+        console.log("User signed in successfully:", userCredential.user);
       }
+    
 
       const user = auth.currentUser;
       if (user) {
         await setAuthCookie(user);
+        console.log(user)
         router.push(`/students/${user.uid}`);
       }
 

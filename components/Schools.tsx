@@ -1,6 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
 import HowWeWork from './HowWeWork';
+import Link from 'next/link';
 
 const Schools = () => {
   const courses = [
@@ -97,9 +98,9 @@ const Schools = () => {
           </p>
 
           {/* Button */}
-          <button className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-full shadow-md transition-transform transform hover:scale-105 focus:ring-2 focus:ring-blue-300 focus:outline-none">
+          <Link href='/quiz'  className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-full shadow-md transition-transform transform hover:scale-105 focus:ring-2 focus:ring-blue-300 focus:outline-none">
             Take the quiz
-          </button>
+          </Link>
         </div>
 
 

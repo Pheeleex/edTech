@@ -26,7 +26,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
     const fetchUser = async () => {
       const userFromCookies = await getUserDetails();
       if (userFromCookies) {
-        console.log(userFromCookies)
+        console.log(userFromCookies, 'userFromCookies')
         setUser(userFromCookies);
       }
       else{
