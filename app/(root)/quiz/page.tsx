@@ -37,7 +37,7 @@ const Page = () => {
 
             {/* Render CareerQuiz when showQuiz is true */}
             {showQuiz && (
-                <div className="absolute top-0 left-0 w-full h-full bg-white flex items-center justify-center z-50">
+                <div className="absolute top-0 left-0 w-full bg-white flex items-center justify-center z-50 h-fit">
                     <div className="relative w-full max-w-3xl bg-gray-100 rounded-lg shadow-lg p-6">
                         <button
                             className="absolute top-4 right-4 bg-red-500 text-white py-1 px-2 rounded-full"
