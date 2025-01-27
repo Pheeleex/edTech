@@ -11,8 +11,8 @@ export async function getUserDetails() {
     const userDetails = cookieStore.get('user_details');
   
     if (authToken && userDetails && userDetails.value) {
-     // console.log('authToken:', authToken);
- // console.log('userDetails:', userDetails);
+      console.log('authToken:', authToken);
+  console.log('userDetails:', userDetails);
       try {
         // You can return the cookies or parse them as needed
         const parsedUserDetails = JSON.parse(userDetails.value); // if you saved as JSON

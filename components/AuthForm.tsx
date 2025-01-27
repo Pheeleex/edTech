@@ -22,6 +22,7 @@ import { setAuthCookie } from "@/lib/actions/setAuth";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { setDoc, doc } from "firebase/firestore"; // Import Firestore methods
+import { useUser } from "@/lib/context/UserContext";
 
 
 type FormType = "sign-in" | "sign-up";
@@ -53,6 +54,8 @@ type AuthFormValues = SignInFormValues | SignUpFormValues;
 const AuthForm = ({ type }: { type: FormType }) => {
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const {user, setUser} = useUser()
+ 
   const router = useRouter();
   const formSchema = type === 'sign-in' ? signInSchema : signUpSchema;
 
@@ -112,8 +115,11 @@ const AuthForm = ({ type }: { type: FormType }) => {
 
       const user = auth.currentUser;
       if (user) {
-        await setAuthCookie(user);
-        console.log(user)
+        const userDetails = await setAuthCookie(user);
+        console.log(userDetails)
+        setUser(userDetails)
+        console.log(user, 'in authform')
+        await new Promise((resolve) => setTimeout(resolve, 500)); // Wait for cookies to be set
         router.push(`/students/${user.uid}`);
       }
 

@@ -22,6 +22,7 @@ export async function setAuthCookie(user: User) {
   if (!response.ok) {
     throw new Error('Failed to set authentication cookie.');
   }
+  return userDetails
 }
 
 

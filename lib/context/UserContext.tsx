@@ -1,12 +1,13 @@
 'use client'
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { getUserDetails } from '../actions/user.actions'; // Adjust path if necessary
+import { auth } from '../firebase';
 
 // Define the types for the user data
 type User = {
   uid: string;
-  email: string;
-  displayName: string;
+  email: string | null; // Allow null
+  displayName: string | null; // Allow null
 };
 
 interface UserContextType {
@@ -22,20 +23,28 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
-    // Load user details from cookies when the component mounts
     const fetchUser = async () => {
       const userFromCookies = await getUserDetails();
       if (userFromCookies) {
-        console.log(userFromCookies, 'userFromCookies')
+        console.log('User from cookies:', userFromCookies);
         setUser(userFromCookies);
-      }
-      else{
-        console.log('did not get user')
+      } else {
+        console.log('No user found in cookies');
       }
     };
-
-    fetchUser();
-  }, []);
+  
+    const unsubscribe = auth.onAuthStateChanged(async (firebaseUser) => {
+      if (firebaseUser) {
+        await fetchUser(); // Sync with cookies
+        console.log('the user')
+      } else {
+        setUser(null); // Clear user if logged out
+        console.log('i never see user')
+      }
+    });
+  
+    return () => unsubscribe();
+  }, []); // Empty dependency array
 
   return (
     <UserContext.Provider value={{ user, setUser }}>
