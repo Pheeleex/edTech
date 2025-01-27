@@ -35,7 +35,7 @@ const CustomSlider: React.FC<CustomSliderProps> = ({ items }) => {
         <SwiperSlide key={index} className="w-full h-full relative">
           {/* Image Container with overflow hidden and styling for positioning */}
           <div className="w-full h-[240px] md:h-[300px] relative  rounded-xl shadow-lg 
-          bg-blue-50 flex flex-col py-2 md:py-4 pb-4 text-center">
+          bg-blue-50 flex flex-col py-2 md:py-4 pb-8 text-center">
             {/* Course Name Container */}
            
               <h1 className='font-bold text-[#161652]'>Learn {item.course} </h1> 

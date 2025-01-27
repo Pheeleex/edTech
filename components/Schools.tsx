@@ -45,9 +45,9 @@ const Schools = () => {
   ];
 
   return (
-    <section className="bg-blue-50 p-4 md:p-8 lg:p-12 pt-[8rem] w-full">
+    <section className="bg-blue-50 p-4 md:p-8 lg:p-16 w-full">
       <div className=" mx-auto px-4 lg:px-6">
-        <h2 className="w-full text-5xl font-bold text-center mb-8">
+        <h2 className="w-full text-4xl md:text-5xl font-bold text-center mb-8">
           Explore each Program
         </h2>
         <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
