@@ -9,38 +9,47 @@ const Schools = () => {
       img: '/assets/Images/swe2.jpg',
       title: 'Software Engineering',
       duration: '9 months',
-      description: 'Software Engineers build the apps and websites you use every day. '
+      description: 'Software Engineers build the apps and websites you use every day. ',
+      page: 'swe'
     },
     {
       img: '/assets/Images/BI.jpg',
       title: 'Business Intelligence Analytics',
       duration: '4 months',
       description: `Use accessible tools to make data useful and insightful. Become indispensible
-       without having to code`
+       without having to code`,
+      page: 'bi'
     },
     {
       img: '/assets/Images/data.jpg',
       title: 'Data Science',
       duration: '6 months',
-      description: `Train AI/ML models, turn raw data into predictions`
+      description: `Train AI/ML models, turn raw data into predictions`,
+      page: 'data'
     },
     {
       img: '/assets/Images/UI-UX.jpg',
       title: 'UI/UX Design',
       duration: '4 months',
-      description: `Design websites, apps and enterprise software, to make them easy to use.`
+      description: `Design websites, apps and enterprise software, to make them easy to use.`,
+      link: '/software',
+      page: 'ui'
     },
     {
       img: '/assets/Images/swe2.jpg',
       title: 'Cyber Security',
       duration: '7 months',
-      description: `Protect people, organisations, networks and data from breaches and online threat.`
+      description: `Protect people, organisations, networks and data from breaches and online threat.`,
+      link: '/software',
+      page: 'cyber'
     },
     {
       img: '/assets/Images/data.png',
       title: 'Quality Assurance',
       duration: '9 months',
-      description: `Break code and document the results without having to code.`
+      description: `Break code and document the results without having to code.`,
+      link: '/software',
+      page: 'qa'
     },
   ];
 
@@ -70,9 +79,14 @@ const Schools = () => {
                 </h3>
                 <p className="text-gray-600 mt-2">Duration: {course.duration}</p>
                 <p className="text-gray-600 mt-2">{course.description}</p>
-                <button className="mt-4 bg-dark-300 text-white px-4 py-2 rounded hover:bg-blue-700 transition duration-300">
-                  Learn More
-                </button>
+                <div className='mt-4'>
+                  <Link
+                    href={`/course/${encodeURIComponent(course.page)}`}
+                    className="bg-dark-300 text-white px-4 py-2 rounded hover:bg-blue-700 transition duration-300"
+                  >
+                    Learn More
+                  </Link>
+                </div>
               </div>
             </div>
           ))}
@@ -98,7 +112,7 @@ const Schools = () => {
           </p>
 
           {/* Button */}
-          <Link href='/quiz'  className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-full shadow-md transition-transform transform hover:scale-105 focus:ring-2 focus:ring-blue-300 focus:outline-none">
+          <Link href='/quiz' className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-full shadow-md transition-transform transform hover:scale-105 focus:ring-2 focus:ring-blue-300 focus:outline-none">
             Take the quiz
           </Link>
         </div>

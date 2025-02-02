@@ -15,15 +15,7 @@ const Sidebar = () => {
     const user = useUser()
   return (
     <aside className='mt-[7rem]'>
-        <Link href='/'>
-        <Image
-          src="/assets/icons/edtech.png"
-          alt="logo"
-          width={160}
-          height={50}
-          className="hidden h-auto lg:block"
-        />
-        </Link>
+        
 
         <nav className="sidebar-nav">
         <ul className="flex flex-1 flex-col gap-6">

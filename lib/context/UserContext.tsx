@@ -26,7 +26,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
     const fetchUser = async () => {
       const userFromCookies = await getUserDetails();
       if (userFromCookies) {
-        console.log('User from cookies:', userFromCookies);
+       // console.log('User from cookies:', userFromCookies);
         setUser(userFromCookies);
       } else {
         console.log('No user found in cookies');

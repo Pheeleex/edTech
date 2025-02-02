@@ -109,16 +109,16 @@ const AuthForm = ({ type }: { type: FormType }) => {
           signInValues.password
         );
     
-        console.log("User signed in successfully:", userCredential.user);
+        //console.log("User signed in successfully:", userCredential.user);
       }
     
 
       const user = auth.currentUser;
       if (user) {
         const userDetails = await setAuthCookie(user);
-        console.log(userDetails)
+        //console.log(userDetails)
         setUser(userDetails)
-        console.log(user, 'in authform')
+        //console.log(user, 'in authform')
         await new Promise((resolve) => setTimeout(resolve, 500)); // Wait for cookies to be set
         router.push(`/students/${user.uid}`);
       }
