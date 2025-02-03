@@ -14,7 +14,9 @@ export default function Home() {
       <Process />
       <Certifications />
       </div>
+     <div id="schools">
      <Schools />
+     </div>
       <Alumni />
       <Cta />
     </div>

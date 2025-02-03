@@ -2,6 +2,10 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FiChevronDown, FiClock, FiBook, FiStar, FiArrowUpRight } from 'react-icons/fi';
+import { useUser } from '@/lib/context/UserContext';
+import { useRouter } from 'next/navigation';
+import { doc, updateDoc } from 'firebase/firestore';
+import { db } from '@/lib/firebase';
 
 interface Module {
   title: string;
@@ -26,9 +30,14 @@ interface CourseDisplayProps {
 }
 
 const CourseDisplay: React.FC<CourseDisplayProps> = ({ course }) => {
+  const [isLoading, setIsLoading] = useState(false);
   const { title, duration, modules } = course;
   const [activeTab, setActiveTab] = useState<'basic' | 'intermediate' | 'advanced'>('basic');
   const [expandedModules, setExpandedModules] = useState<Set<string>>(new Set());
+  const user = useUser()
+  const router = useRouter()
+
+  console.log(title, duration, modules)
 
   const toggleModule = (moduleTitle: string) => {
     const newSet = new Set(expandedModules);
@@ -41,6 +50,36 @@ const CourseDisplay: React.FC<CourseDisplayProps> = ({ course }) => {
     { key: 'intermediate', label: 'Core Concepts', icon: <FiStar /> },
     { key: 'advanced', label: 'Advanced Topics', icon: <FiArrowUpRight /> },
   ];
+
+  const enroll = async () => {
+    setIsLoading(true)
+    if (!user.user) {
+      router.push('/sign-up');
+    } else {
+      try {
+           // Add null check for user.user and uid
+      if (!user.user?.uid) {
+        throw new Error('User not properly authenticated');
+      }
+        // Reference to the user's document
+        const userRef = doc(db, 'users', user.user?.uid);
+        
+        // Update the studentCourse field
+        await updateDoc(userRef, {
+          studentCourse: title // Make sure course is available in scope
+        });
+  
+        // Optional: Redirect or show success message
+        console.log('Enrollment successful!');
+        setIsLoading(false)
+         router.push(`/students/${user.user.uid}`);
+        
+      } catch (error) {
+        console.error('Error updating document:', error);
+        // Handle error (show error message to user)
+      }
+    }
+  };
 
   return (
     <motion.div 
@@ -129,8 +168,10 @@ const CourseDisplay: React.FC<CourseDisplayProps> = ({ course }) => {
       </AnimatePresence>
 
       <div className="mt-8 flex justify-end">
-        <button className="bg-indigo-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-indigo-700 transition-colors flex items-center gap-2">
-          Enroll Now
+        <button 
+          onClick={enroll}
+          className="bg-indigo-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-indigo-700 transition-colors flex items-center gap-2">
+          {isLoading ? 'Enrolling...' : 'Enroll Now'}
           <FiArrowUpRight className="text-lg" />
         </button>
       </div>

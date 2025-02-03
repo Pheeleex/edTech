@@ -1,6 +1,6 @@
 'use server'
 
-import { collection, getDocs, query, where } from "firebase/firestore";
+import { collection, doc, getDoc, getDocs, query, where } from "firebase/firestore";
 import { cookies } from "next/headers";
 import { db } from "../firebase";
 import { Course } from "@/components/CourseDisplay";
@@ -77,6 +77,23 @@ export async function fetchCourseByPage(page: string) {
     return course;
   } catch (error) {
     console.error("Error fetching course:", error);
+    return null;
+  }
+}
+
+
+export async function getUserCourse(userId: string): Promise<string | null>{
+  const userDocRef = doc(db, "users", userId)
+
+   // Fetch the document snapshot
+   const docSnap = await getDoc(userDocRef);
+
+   if (docSnap.exists()) {
+    
+    // Option 2: Directly using .get() to retrieve the field's value:
+    return docSnap.get("studentCourse") as string;
+  } else {
+    console.log("No such user found.");
     return null;
   }
 }

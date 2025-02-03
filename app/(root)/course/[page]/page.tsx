@@ -2,6 +2,7 @@
 import React from "react";
 import { fetchCourseByPage } from "@/lib/actions/user.actions";
 import CourseDisplay, { Course } from "@/components/CourseDisplay";
+import CourseIntro from "@/components/CourseIntro";
 
 
 interface CoursePageProps {
@@ -9,13 +10,9 @@ interface CoursePageProps {
 }
 
 export default async function CoursePage({ params }: CoursePageProps) {
-  // Log params to see what we're getting:
-  console.log("Dynamic route params:", params);
-
-  console.log('logs')
-
-  // Make sure params.page is defined
-  const pageParam = params.page;
+  
+  const resolvedParams = await params;
+  const pageParam = resolvedParams.page;
   if (!pageParam) {
     return <p>No course page specified.</p>;
   }
@@ -26,7 +23,8 @@ export default async function CoursePage({ params }: CoursePageProps) {
   }
 
   return (
-    <div className="p-8 mt-20">
+    <div className="p-8 mt-10">
+    { /* <CourseIntro /> */}
       {courses.map((course, idx) => (
         <CourseDisplay key={idx} course={course} />
       ))}
