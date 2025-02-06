@@ -54,6 +54,10 @@ const CourseDisplay: React.FC<CourseDisplayProps> = ({ course }) => {
   const enroll = async () => {
     setIsLoading(true)
     if (!user.user) {
+      console.log('Enrollment successful!', course);
+      const parsedCourse = JSON.stringify(course)
+      localStorage.setItem('Course', parsedCourse)
+      localStorage.setItem('courseInterest', course.title)
       router.push('/sign-up');
     } else {
       try {
@@ -69,13 +73,12 @@ const CourseDisplay: React.FC<CourseDisplayProps> = ({ course }) => {
           studentCourse: title // Make sure course is available in scope
         });
   
-        // Optional: Redirect or show success message
-        console.log('Enrollment successful!');
         setIsLoading(false)
-         router.push(`/students/${user.user.uid}`);
+        router.push(`/students/${user.user.uid}`);
         
       } catch (error) {
         console.error('Error updating document:', error);
+        setIsLoading(false)
         // Handle error (show error message to user)
       }
     }

@@ -2,7 +2,7 @@
 import React from "react";
 import { fetchCourseByPage } from "@/lib/actions/user.actions";
 import CourseDisplay, { Course } from "@/components/CourseDisplay";
-import CourseIntro from "@/components/CourseIntro";
+
 
 
 interface CoursePageProps {

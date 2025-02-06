@@ -1,3 +1,4 @@
+import EnrollUser from '@/components/enrollUser';
 import Schools from '@/components/Schools';
 import { getUserCourse, getUserDetails } from '@/lib/actions/user.actions';
 import Link from 'next/link';
@@ -22,8 +23,9 @@ const Page = async () => {
   if (!studentCourse) {
     return (
      <div className='mt-20'>
+      <EnrollUser />
     
-      <Link href="/#schools" className='border border-white p-4 cursor-pointer'>
+      <Link href="/#schools" className='border border-white p-2 cursor-pointer'>
       Register a course</Link>
      </div>
     );
