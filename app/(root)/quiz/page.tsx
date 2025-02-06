@@ -3,7 +3,7 @@
 import CareerQuiz from '@/components/CareerQuiz';
 import Image from 'next/image';
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { FiArrowRight, FiX } from 'react-icons/fi';
 
 const Page = () => {
