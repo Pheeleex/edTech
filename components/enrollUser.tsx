@@ -28,11 +28,7 @@ interface Course {
   page: string;
 }
 
-// Define a minimal User interface (adjust as needed)
-interface User {
-  uid: string;
-  displayName?: string;
-}
+
 
 const EnrollUser: React.FC = () => {
   const router = useRouter();
@@ -170,7 +166,7 @@ const EnrollUser: React.FC = () => {
           // Render an alternative UI asking if the user wants to enroll a new course.
           <div className="text-center">
             <h2 className="text-2xl font-semibold text-gray-800 mb-4">
-              You haven't shown interest in any course yet.
+              You haven&apos;t shown interest in any course yet.
             </h2>
             <p className="text-gray-600 mb-4">
               Would you like to enroll in a new course?

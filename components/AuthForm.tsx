@@ -54,7 +54,7 @@ type AuthFormValues = SignInFormValues | SignUpFormValues;
 const AuthForm = ({ type }: { type: FormType }) => {
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
-  const {user, setUser} = useUser()
+  const {setUser} = useUser()
  
   const router = useRouter();
   const formSchema = type === 'sign-in' ? signInSchema : signUpSchema;
@@ -103,13 +103,13 @@ const AuthForm = ({ type }: { type: FormType }) => {
         // Type narrowing to SignInFormValues
         const signInValues = values as SignInFormValues;
     
-        const userCredential = await signInWithEmailAndPassword(
-          auth,
-          signInValues.email,
-          signInValues.password
-        );
-    
-        //console.log("User signed in successfully:", userCredential.user);
+       console.log(signInValues)
+       const userCredential = await signInWithEmailAndPassword(
+        auth,
+        signInValues.email,
+        signInValues.password
+      );
+        console.log("User signed in successfully:", userCredential.user);
       }
     
 
@@ -266,7 +266,7 @@ const AuthForm = ({ type }: { type: FormType }) => {
       <div className="mt-6 text-center">
         {type === "sign-in" ? (
           <p className="text-gray-700">
-            Don’t have an account?{" "}
+            Don&apos;t have an account?{" "}
             <Link href="/sign-up" className="text-blue-500 hover:underline">
               Sign Up
             </Link>

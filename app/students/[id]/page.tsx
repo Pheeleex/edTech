@@ -1,5 +1,4 @@
 import EnrollUser from '@/components/enrollUser';
-import Schools from '@/components/Schools';
 import { getUserCourse, getUserDetails } from '@/lib/actions/user.actions';
 import Link from 'next/link';
 import React from 'react';
