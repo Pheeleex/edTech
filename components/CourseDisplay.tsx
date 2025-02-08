@@ -41,7 +41,11 @@ const CourseDisplay: React.FC<CourseDisplayProps> = ({ course }) => {
 
   const toggleModule = (moduleTitle: string) => {
     const newSet = new Set(expandedModules);
-    newSet.has(moduleTitle) ? newSet.delete(moduleTitle) : newSet.add(moduleTitle);
+    if (newSet.has(moduleTitle)) {
+      newSet.delete(moduleTitle);
+    } else {
+      newSet.add(moduleTitle);
+    }
     setExpandedModules(newSet);
   };
 
