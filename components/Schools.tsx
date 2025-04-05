@@ -8,12 +8,14 @@ const Schools = () => {
     {
       img: '/assets/Images/swe2.jpg',
       title: 'Software Engineering',
-      duration: '9 months',
+      code: 'SWE',
+      duration: '17 months',
       description: 'Software Engineers build the apps and websites you use every day. '
     },
     {
       img: '/assets/Images/BI.jpg',
       title: 'Business Intelligence Analytics',
+      code: 'BIA',
       duration: '4 months',
       description: `Use accessible tools to make data useful and insightful. Become indispensible
        without having to code`
@@ -21,24 +23,28 @@ const Schools = () => {
     {
       img: '/assets/Images/data.jpg',
       title: 'Data Science',
+      code: 'DS',
       duration: '6 months',
       description: `Train AI/ML models, turn raw data into predictions`
     },
     {
       img: '/assets/Images/UI-UX.jpg',
       title: 'UI/UX Design',
+      code: 'UIUX',
       duration: '4 months',
       description: `Design websites, apps and enterprise software, to make them easy to use.`
     },
     {
       img: '/assets/Images/swe2.jpg',
       title: 'Cyber Security',
+      code: 'CSE',
       duration: '7 months',
       description: `Protect people, organisations, networks and data from breaches and online threat.`
     },
     {
       img: '/assets/Images/data.png',
       title: 'Quality Assurance',
+      code: 'QA',
       duration: '9 months',
       description: `Break code and document the results without having to code.`
     },
@@ -70,9 +76,9 @@ const Schools = () => {
                 </h3>
                 <p className="text-gray-600 mt-2">Duration: {course.duration}</p>
                 <p className="text-gray-600 mt-2">{course.description}</p>
-                <button className="mt-4 bg-dark-300 text-white px-4 py-2 rounded hover:bg-blue-700 transition duration-300">
+                <Link href={`/courses/${encodeURIComponent(course.code)}`} className="mt-24 bg-dark-300 text-white px-4 py-2 rounded hover:bg-blue-700 transition duration-300">
                   Learn More
-                </button>
+                </Link>
               </div>
             </div>
           ))}

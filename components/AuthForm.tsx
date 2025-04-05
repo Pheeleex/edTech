@@ -99,7 +99,6 @@ const AuthForm = ({ type }: { type: FormType }) => {
       } else {
         // Type narrowing to SignInFormValues
         const signInValues = values as SignInFormValues;
-    
         const userCredential = await signInWithEmailAndPassword(
           auth,
           signInValues.email,
