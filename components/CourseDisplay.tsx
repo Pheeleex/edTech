@@ -30,9 +30,9 @@ const CourseDisplay: React.FC<CourseDisplayProps> = ({ course }) => {
   };
 
   const ModuleLevels = [
-    { key: 'basic' as LessonLevel, label: 'Fundamentals', icon: <FiBook /> },
-    { key: 'intermediate' as LessonLevel, label: 'Core Concepts', icon: <FiStar /> },
-    { key: 'advanced' as LessonLevel, label: 'Advanced Topics', icon: <FiArrowUpRight /> },
+    { key: 'basic' as LessonLevel, label: 'Fundamentals', icon: () => <FiBook /> },
+    { key: 'intermediate' as LessonLevel, label: 'Core Concepts', icon:() => <FiStar /> },
+    { key: 'advanced' as LessonLevel, label: 'Advanced Topics', icon: () => <FiArrowUpRight /> },
   ];
 
   return (
@@ -63,7 +63,7 @@ const CourseDisplay: React.FC<CourseDisplayProps> = ({ course }) => {
                 : 'hover:bg-indigo-50 text-gray-600'
             }`}
           >
-            {level.icon}
+            {level.icon()}
             <span className="font-medium">{level.label}</span>
           </button>
         ))}
