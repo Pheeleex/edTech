@@ -19,14 +19,14 @@ const CoursePage = async ({ params }: CoursePageProps) => {
   console.log(course, 'course')
 
   if (!course) {
-    return <div className="p-4 mt-40 bg-blue-50 rounded-full">
+    return <div className="p-4 mt-40 bg-blue-200 rounded-full">
       <div className="flex flex-col items-center justify-center min-h-[300px] gap-4 p-8 mt-10 text-center">
         <div className="p-4 bg-yellow-50 rounded-full border-2 border-yellow-100">
           <span className="text-3xl" aria-hidden="true">⚠️</span>
         </div>
         <h2 className="text-2xl font-bold text-gray-900">Course Details Pending</h2>
         <p className="text-gray-600 max-w-md">
-          We're working hard to gather complete information for {" "}
+          We&apos;re working hard to gather complete information for{" "}
           <span className="font-mono font-semibold text-gray-900">{code}</span>.
           Please check back soon!
         </p>
