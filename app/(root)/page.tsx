@@ -8,7 +8,7 @@ import Schools from "@/components/Schools";
 
 export default function Home() {
   return (
-    <div className="mt-20 md:mt-30 ">
+    <div className="mt-20">
       <div className="relative">
       <Hero />
       <Process />

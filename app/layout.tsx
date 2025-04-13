@@ -26,7 +26,9 @@ export default function RootLayout({
       >
         <UserProvider>
         <NavbarWrapper />
+        <div className="pt-[3rem]">
         {children}
+        </div>
         </UserProvider>
       </body>
     </html>

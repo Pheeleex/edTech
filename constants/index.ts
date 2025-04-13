@@ -4,23 +4,19 @@ import frontend from '/assets/images/frontend-eng.jpg'
 export const navItems = [
     {
       name: "Dashboard",
-      icon: "/assets/icons/dashboard.svg",
-      url: "/",
+      icon: "/assets/icons/dashboard.svg"
     },
     {
       name: "Documents",
-      icon: "/assets/icons/documents.svg",
-      url: "/documents",
+      icon: "/assets/icons/documents.svg"
     },
     {
       name: "Media",
-      icon: "/assets/icons/file-video.svg",
-      url: "/media",
+      icon: "/assets/icons/file-video.svg"
     },
     {
       name: "Others",
-      icon: "/assets/icons/file-other.svg",
-      url: "/others",
+      icon: "/assets/icons/file-other.svg"
     },
   ];
 

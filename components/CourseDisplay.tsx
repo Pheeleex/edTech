@@ -31,12 +31,12 @@ const CourseDisplay: React.FC<CourseDisplayProps> = ({ course }) => {
 
   const ModuleLevels = [
     { key: 'basic' as LessonLevel, label: 'Fundamentals', icon: () => <FiBook /> },
-    { key: 'intermediate' as LessonLevel, label: 'Core Concepts', icon:() => <FiStar /> },
+    { key: 'intermediate' as LessonLevel, label: 'Core Concepts', icon: () => <FiStar /> },
     { key: 'advanced' as LessonLevel, label: 'Advanced Topics', icon: () => <FiArrowUpRight /> },
   ];
 
   return (
-    <motion.div 
+    <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       className="relative bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-8 shadow-xl mt-12 hover:shadow-2xl transition-shadow duration-300"
@@ -55,13 +55,15 @@ const CourseDisplay: React.FC<CourseDisplayProps> = ({ course }) => {
       <div className="flex gap-4 mb-8 border-b border-gray-200">
         {ModuleLevels.map((level) => (
           <button
+            role="tab"
+            aria-selected={activeTab === level.key}
+            aria-controls={`panel-${level.key}`}
             key={level.key}
             onClick={() => setActiveTab(level.key)}
-            className={`flex items-center gap-2 px-4 py-2 rounded-t-lg transition-colors ${
-              activeTab === level.key
+            className={`flex items-center gap-2 px-4 py-2 rounded-t-lg transition-colors ${activeTab === level.key
                 ? 'bg-indigo-600 text-white'
                 : 'hover:bg-indigo-50 text-gray-600'
-            }`}
+              }`}
           >
             {level.icon()}
             <span className="font-medium">{level.label}</span>
@@ -77,12 +79,12 @@ const CourseDisplay: React.FC<CourseDisplayProps> = ({ course }) => {
           exit={{ opacity: 0, x: 20 }}
           className="space-y-6"
         >
-          {groupedModules[activeTab]?.map((module: ModuleItem, idx: number) => (
-            <div 
-              key={idx}
+          {groupedModules[activeTab]?.map((module: ModuleItem) => (
+            <div
+              key={module.title}
               className="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow"
             >
-              <div 
+              <div
                 onClick={() => toggleModule(module.title)}
                 className="flex justify-between items-center cursor-pointer"
               >

@@ -11,6 +11,7 @@ export interface GroupedModules {
   [level: string]: {
     title: string;
     topics: string[];
+    lessonId: string;
   }[];
 }
 

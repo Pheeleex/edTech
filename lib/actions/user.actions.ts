@@ -1,6 +1,6 @@
 'use server'
 
-import { collection, getDocs, query, where } from "firebase/firestore";
+import { collection, doc, getDocs, query, where } from "firebase/firestore";
 import { cookies } from "next/headers";
 import { db } from "../firebase";
 import { Course, FullCourseDetails, GroupedModules, Lesson } from "@/types";
@@ -73,6 +73,7 @@ export async function getUserDetails() {
         groupedModules[data.level].push({
           title: data.lessonName,
           topics: data.topics,
+          lessonId: data.lessonId,
         });
       });
   
@@ -86,5 +87,19 @@ export async function getUserDetails() {
     } catch (error) {
       console.error('Error fetching course:', error);
       return null;
+    }
+  }
+
+  export async function getTasks(){
+    try {
+      const TaskQuery = collection(db, "Tasks")
+      const TaskSnapshot = await getDocs(TaskQuery)
+      const tasks = TaskSnapshot.docs.map((doc) => ({
+        ...doc.data(),
+        id: doc.id,
+      }))
+      
+    } catch (error) {
+      
     }
   }
