@@ -13,7 +13,6 @@ const page = async () => {
   if (!user) {
     return (
       <div>
-       
         <h1>No user found</h1>
       </div>
     );
