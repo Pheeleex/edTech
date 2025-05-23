@@ -1,6 +1,6 @@
 'use server'
 
-import { collection, doc, getDocs, query, where } from "firebase/firestore";
+import { collection,  getDocs, query, where } from "firebase/firestore";
 import { cookies } from "next/headers";
 import { db } from "../firebase";
 import { Course, FullCourseDetails, GroupedModules, Lesson } from "@/types";
@@ -98,8 +98,10 @@ export async function getUserDetails() {
         ...doc.data(),
         id: doc.id,
       }))
+      console.log(tasks, 'tasks')
       
     } catch (error) {
-      
+      console.error('Error fetching tasks:', error);
+      return null;
     }
   }

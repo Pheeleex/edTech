@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { FiLock, FiPlay, FiCheckCircle, FiClock } from 'react-icons/fi';
+import { FiLock, FiPlay, FiClock } from 'react-icons/fi';
 import { FullCourseDetails } from '@/types';
 
 interface LessonCardProps {
@@ -97,20 +97,13 @@ interface LessonListProps {
   courseDetails: FullCourseDetails;
 }
 
-interface ModuleItem {
-  title: string;
-  topics: string[];
-}
 
-interface CourseDisplayProps {
-  course: FullCourseDetails;
-}
 
 
 const LessonList: React.FC<LessonListProps> = ({ courseDetails }) => {
   const { modules, courseName, groupedModules } = courseDetails;
   console.log(modules, 'modules')
-  const [lockedLessons, setLockedLessons] = useState<string[]>(modules.slice(1)); // Lock all lessons except the first one
+  const lockedLessons = modules.slice(1); // Lock all lessons except the first one; // Lock all lessons except the first one
 
   // Calculate progress
   const completedCount = modules.length > 0 ? 1 : 0; // First module is unlocked
